@@ -11,6 +11,16 @@ process.env.PORT = process.env.PORT || 3000;
 
 process.env.NODE_ENV = process.env.NODE_ENV || 'dev' ; 
 
+// ================== 
+// EXPIRACIÖN 
+// ==================
+
+process.env.EXPIRA_TOKEN = 60*60*34*30
+// ================== 
+// SEED 
+// ==================
+
+process.env.SEED = process.env.SEED || 'esta-es-mi-seed-super-seed'
 
 // ================== 
 // BASE DE DATOS 

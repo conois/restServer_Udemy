@@ -3,9 +3,13 @@ const _ = require('underscore')
 const app = express();
 const Usuario = require('../models/usuario');
 const bcrypt = require('bcrypt');
+const { verificaToken } = require('./../middleware/autenticacion')
+const { verificaAdminRole } = require('./../middleware/autenticacion')
 
 
-app.get('/usuarios', function (req, res) {
+
+app.get('/usuarios', verificaToken ,(req, res) => {
+
 
     let desde = req.query.desde || 0
     desde = Number(desde)
@@ -42,7 +46,7 @@ app.get('/usuarios', function (req, res) {
         })
 })
 
-app.post('/usuario', function (req, res) {
+app.post('/usuario', [verificaToken, verificaAdminRole], function (req, res) {
     let persona = req.body;
 
     let usuarioDB = new Usuario({
@@ -70,7 +74,7 @@ app.post('/usuario', function (req, res) {
 })
 
 //Actualizar un registro 
-app.put('/usuario/:id', function (req, res) {
+app.put('/usuario/:id', [verificaToken, verificaAdminRole], function (req, res) {
     //pongo las variables que si seran posible actualizar por medio del metodo put 
     let body = _.pick(req.body, ['nombre', 'email', 'img', 'estado', 'role'])
     let id = req.params.id;
@@ -97,7 +101,7 @@ app.put('/usuario/:id', function (req, res) {
 
 })
 
-app.delete('/usuario/:id', function (req, res) {
+app.delete('/usuario/:id', [verificaToken, verificaAdminRole], function (req, res) {
     let id = req.params.id
 
     let cambiaEstado= {

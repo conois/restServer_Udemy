@@ -14,7 +14,7 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json())
 
 //requiero las rutas 
-app.use(require('./routes/usuario'))
+app.use(require('./routes/index'))
 
 //Configurar la coneccion a la base de datos 
 console.log("URL DE CONECCION: ", process.env.URLDB);
